@@ -14,6 +14,8 @@ module BetterErrors
       @line           = line
       @name           = name
       @frame_binding  = frame_binding
+      @class_name = nil
+      @method_name = nil
 
       set_pretty_method_name if frame_binding
     end

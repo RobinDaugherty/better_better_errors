@@ -11,7 +11,7 @@ module BetterErrors
     end
 
     def __better_errors_bindings_stack
-      @__better_errors_bindings_stack || []
+      @__better_errors_bindings_stack ||= []
     end
   end
 end

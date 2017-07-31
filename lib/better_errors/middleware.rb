@@ -46,6 +46,7 @@ module BetterErrors
     def initialize(app, handler = ErrorPage)
       @app      = app
       @handler  = handler
+      @error_page = nil
     end
 
     # Calls the Better Errors middleware
