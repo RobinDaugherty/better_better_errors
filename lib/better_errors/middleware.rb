@@ -73,6 +73,8 @@ module BetterErrors
       case env["PATH_INFO"]
       when %r{/__better_errors/(?<id>.+?)/(?<method>\w+)\z}
         internal_call env, $~
+      when %r{/__better_errors/assets/(?<name>.+?)\.(?<ext>.+?)\z}
+        serve_asset $~[:name], $~[:ext]
       when %r{/__better_errors/?\z}
         show_error_page env
       else
@@ -105,6 +107,19 @@ module BetterErrors
       end
 
       [status_code, { "Content-Type" => "text/#{type}; charset=utf-8" }, [content]]
+    end
+
+    def serve_asset(name, ext)
+      content = File.read File.expand_path("../assets/#{name}.#{ext}", __FILE__)
+      content_type = case ext
+      when 'css'
+        'text/css'
+      when 'js'
+        'application/javascript'
+      else
+        'text/plain'
+      end
+      [200, { "Content-Type" => "#{content_type}; charset=utf-8" }, [content]]
     end
 
     def text?(env)
