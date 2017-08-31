@@ -127,7 +127,18 @@ module BetterErrors
   # If you encounter problems while using Pry, *please* file a bug report at
   # https://github.com/charliesome/better_errors/issues
   def self.use_pry!
+    warn "NOTE: Pry support for better_errors has been moved into its own gem, better_errors-pry.\n"\
+      "      Pry support without that gem will be removed in a future release of better_errors."
     REPL::PROVIDERS.unshift const: :Pry, impl: "better_errors/repl/pry"
+  end
+
+  # Allows a new REPL provider to be specified as desired.
+  #
+  # Unlike the way that {#use_pry!} works, this expects that the REPL provider has already been
+  # loaded, and has loaded any dependencies.
+  # @param [Class] REPL class, which implements `store_last_exception`, `send_input`, and `prompt`.
+  def self.use_repl_provider(provider)
+    BetterErrors::REPL.provider = provider
   end
 
   # Automatically sniffs a default editor preset based on the EDITOR
