@@ -29,6 +29,9 @@ gemfile:
   - gemfiles/rails50_boc.gemfile
   - gemfiles/rails51_boc.gemfile
   - gemfiles/rails52_boc.gemfile
+  - gemfiles/rails50_binding_ninja.gemfile
+  - gemfiles/rails51_binding_ninja.gemfile
+  - gemfiles/rails52_binding_ninja.gemfile
   - gemfiles/rack.gemfile
   - gemfiles/rack_boc.gemfile
   - gemfiles/pry09.gemfile
