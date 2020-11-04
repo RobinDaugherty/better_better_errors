@@ -45,7 +45,7 @@ jobs:
 
     - name: Set gem version
       run: |
-        gem bump better_errors --version ${version} --no-commit
+        bundle exec gem bump better_errors --version ${version} --no-commit
 
     - name: Build gem
       run: gem build better_errors.gemspec
@@ -58,3 +58,5 @@ jobs:
         upload_url: ${{ steps.get_release.outputs.upload_url }}
         asset_path: ./better_errors-*.gem
         asset_content_type: application/octet-stream
+
+    # TODO: if this release is on master, add a commit updating the version in master.
