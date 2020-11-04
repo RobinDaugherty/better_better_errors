@@ -31,9 +31,9 @@ jobs:
 
     - name: Get release version
       run: |
-        version="${github_ref/refs//tags//v/}"
-        echo $version
-        echo "::set-env name=version::$version"
+        version="${github_ref//refs\/tags\/v/}"
+        echo "Version: ${version}"
+        echo "version=${version}" >> $GITHUB_ENV
       env:
         github_ref: ${{ github.ref }}
 
