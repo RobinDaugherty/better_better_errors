@@ -30,10 +30,11 @@ jobs:
         bundle install --jobs 4 --retry 3
 
     - name: Get release version
+      id: get_version
       run: |
         version="${github_ref//refs\/tags\/v/}"
-        echo "Version: ${version}"
-        echo "version=${version}" >> $GITHUB_ENV
+        echo "${version}"
+        echo "::set-output name=version::${version}"
       env:
         github_ref: ${{ github.ref }}
 
@@ -45,7 +46,7 @@ jobs:
 
     - name: Set gem version
       run: |
-        bundle exec gem bump better_errors --version ${version} --no-commit
+        bundle exec gem bump better_errors --version ${{ steps.get_version.outputs.version }} --no-commit
 
     - name: Build gem
       run: gem build better_errors.gemspec
@@ -56,7 +57,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.get_release.outputs.upload_url }}
-        asset_path: ./better_errors-*.gem
+        asset_path: ./better_errors-${{ steps.get_version.outputs.version }}.gem
         asset_content_type: application/octet-stream
 
     # TODO: if this release is on master, add a commit updating the version in master.
